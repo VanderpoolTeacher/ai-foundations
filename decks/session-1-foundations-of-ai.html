@@ -156,6 +156,14 @@
     color:var(--mute);letter-spacing:.02em;
   }
 
+  .pair.three{grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2.4vw,2rem)}
+  .pair.three .k{font-size:clamp(1.15rem,2.3vw,1.75rem)}
+  .pair.three .v{font-size:clamp(.92rem,1.4vw,1.15rem)}
+  .pair.three .w{font-size:clamp(.82rem,1.2vw,1rem)}
+  .egslabel{font-family:var(--mono);font-size:clamp(.6rem,.85vw,.72rem);letter-spacing:.12em;
+            text-transform:uppercase;color:var(--mute);margin-top:1.5rem}
+  .egslabel + .egs{margin-top:.6rem}
+
   .big{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5vw,4rem);letter-spacing:-.03em;line-height:1.05;margin:0 0 1rem;text-wrap:balance}
   .rule-line{height:3px;background:var(--accent);width:4.5rem;margin:0 0 2rem;border-radius:2px}
   .kicker{margin-top:2.2rem;padding:1.1rem 1.4rem;background:var(--accent-soft);border-radius:8px;
@@ -195,7 +203,8 @@
     .lede,li,.kicker,.fnote{max-width:none}
     .eyebrow{margin-bottom:1.1rem}
 
-    .pair,.detail,.vs,.cols,.cols.three,.egs{grid-template-columns:1fr;gap:1.1rem}
+    .pair,.pair.three,.detail,.vs,.cols,.cols.three,.egs{grid-template-columns:1fr;gap:1.1rem}
+    .egslabel{margin-top:1.2rem;font-size:.6rem;line-height:1.5}
     .detail{max-width:none}
 
     .flow{flex-direction:column;gap:.55rem}
@@ -309,21 +318,24 @@
 
 <!-- 6 -->
 <section class="slide" data-t="0:10">
-  <div class="eyebrow">The two kinds you will meet</div>
-  <h2 class="wide">One learns to sort. One learns to write.</h2>
-  <div class="pair">
+  <div class="eyebrow">The three kinds you will meet</div>
+  <h2 class="wide">One sorts. One writes. One acts.</h2>
+  <div class="pair three">
     <div><div class="k">Machine learning</div><div class="v">It sorts and predicts</div>
       <div class="w">You have been using it for twenty years without calling it AI.</div></div>
     <div><div class="k">Generative AI</div><div class="v">It drafts and produces</div>
       <div class="w">ChatGPT, Gemini, Copilot. The first one you talk to &mdash; which is why it feels new.</div></div>
+    <div><div class="k">Agentic AI</div><div class="v">It goes and does the work</div>
+      <div class="w">Not just the draft &mdash; it files the record, books the slot, sends the update. <b>Newest, and the only one that changes something.</b></div></div>
   </div>
+  <div class="egslabel">Four you already use &mdash; all of them machine learning, all of them older than ChatGPT</div>
   <div class="egs">
     <div><span class="yr">1990s</span><span class="th">The text from your bank</span><span class="ds">&ldquo;Did you just spend $340 in Ohio?&rdquo; Fraud detection has run on this since before the internet was mainstream.</span></div>
     <div><span class="yr">2004</span><span class="th">Your spam folder</span><span class="ds">Gmail shipped with it. Nobody wrote a rule for what spam looks like &mdash; it learned from what people marked.</span></div>
     <div><span class="yr">MID-2000s</span><span class="th">What Netflix puts on the front page</span><span class="ds">Sorted for you, from what people like you watched.</span></div>
     <div><span class="yr">2017</span><span class="th">Your phone unlocking at your face</span><span class="ds">Face ID. Trained on examples of your face, not programmed with a description of it.</span></div>
   </div>
-  <div class="kicker">Neither one was programmed with rules. <b>Both learned from examples.</b></div>
+  <div class="kicker">None of them was programmed with rules &mdash; all three learned from examples. What separates them is <b>how much they are allowed to do without you.</b></div>
 </section>
 
 <!-- 7 -->
@@ -401,6 +413,7 @@
         <div><dt>Machine learning</dt><dd>Finds the pattern in examples. <b>Your spam filter.</b></dd></div>
         <div><dt>Deep learning</dt><dd>Machine learning with far more layers. <b>What made the next one possible.</b></dd></div>
         <div><dt>Generative AI</dt><dd>Produces new content. <b>The one you talk to.</b></dd></div>
+        <div><dt>Agentic AI</dt><dd>Generative AI wired up to <b>take actions.</b> The video predates it.</dd></div>
       </dl>
       <div class="kicker" style="margin-top:1.2rem;font-size:clamp(.9rem,1.3vw,1.1rem)">You do not need this to start. <b>It is on the playlist if you want it.</b></div>
     </div>
@@ -517,14 +530,14 @@
 
 <!-- 19 -->
 <section class="slide" data-t="0:38">
-  <div class="eyebrow">Where this is going</div>
+  <div class="eyebrow">Where this is going &middot; agentic AI</div>
   <h2 class="wide">That&rsquo;s a system, not a prompt</h2>
   <div class="cols three">
     <div class="card"><span class="tag">Step one</span><h3>Messy input</h3><p>A photo, a screenshot, a transcript, forty survey responses. Something a person would have had to read and retype.</p></div>
     <div class="card"><span class="tag">Step two</span><h3>Drafted output</h3><p>Structured, usable, and roughly right. Never final.</p></div>
     <div class="card"><span class="tag">Step three</span><h3>A person checks</h3><p>The step people skip. It is the step that makes the whole thing safe to use.</p></div>
   </div>
-  <div class="kicker"><b>A prompt gets you one answer. A system does the same job every time, with the same guardrails.</b> Both of those demos run this way whether I am paying attention or not &mdash; that is the difference between using AI and building with it.</div>
+  <div class="kicker"><b>That third kind from earlier &mdash; agentic &mdash; is just this with the gate in it.</b> A prompt gets you one answer. A system does the same job every time, with the same guardrails, whether I am paying attention or not. <b>The gate is what makes it safe to hand work to.</b></div>
 </section>
 
 <!-- 20 -->
