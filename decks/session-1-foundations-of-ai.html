@@ -137,6 +137,25 @@
   .asof{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
         color:var(--mute);margin-top:.75rem}
 
+  .titlegrid{display:grid;grid-template-columns:1fr auto;gap:clamp(2rem,6vw,5rem);align-items:center}
+  .getit{
+    display:flex;flex-direction:column;align-items:center;gap:.55rem;
+    text-decoration:none;color:var(--ink);flex:none;
+  }
+  .getit .qr{
+    display:block;background:#fff;border:1px solid var(--rule);border-radius:10px;
+    padding:clamp(.6rem,1.1vw,.9rem);line-height:0;color:#14161A;
+  }
+  .getit .qr svg{display:block;width:clamp(7rem,11vw,10rem);height:auto;shape-rendering:crispEdges}
+  .getit-t{
+    font-family:var(--mono);font-size:clamp(.6rem,.85vw,.72rem);letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);
+  }
+  .getit-u{
+    font-family:var(--mono);font-size:clamp(.58rem,.8vw,.68rem);
+    color:var(--mute);letter-spacing:.02em;
+  }
+
   .big{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5vw,4rem);letter-spacing:-.03em;line-height:1.05;margin:0 0 1rem;text-wrap:balance}
   .rule-line{height:3px;background:var(--accent);width:4.5rem;margin:0 0 2rem;border-radius:2px}
   .kicker{margin-top:2.2rem;padding:1.1rem 1.4rem;background:var(--accent-soft);border-radius:8px;
@@ -157,16 +176,92 @@
   #notes b{color:var(--ink)}
   #notes .h{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
   @media print{ .slide{display:flex!important;position:relative;page-break-after:always;height:100vh} #notes,footer,.nav{display:none} }
+
+  /* ---------- phones and narrow windows: one column, scrollable ---------- */
+  @media (max-width:780px){
+    html,body{height:auto}
+    body{overflow-y:auto;overflow-x:hidden}
+
+    .slide{
+      position:relative;inset:auto;
+      min-height:100svh;
+      justify-content:flex-start;
+      padding:2.2rem 1.25rem 4.5rem;
+    }
+    .slide.on{display:flex}
+
+    h1{font-size:clamp(2rem,9vw,2.8rem)}
+    h2,h2.wide{font-size:clamp(1.45rem,6.4vw,2.1rem);max-width:none;margin-bottom:1.2rem}
+    .lede,li,.kicker,.fnote{max-width:none}
+    .eyebrow{margin-bottom:1.1rem}
+
+    .pair,.detail,.vs,.cols,.cols.three,.egs{grid-template-columns:1fr;gap:1.1rem}
+    .detail{max-width:none}
+
+    .flow{flex-direction:column;gap:.55rem}
+    .farrow{align-self:center;transform:rotate(90deg);font-size:1rem;line-height:1}
+
+    ul{gap:.85rem}
+    li{font-size:1.02rem}
+
+    .kicker{margin-top:1.4rem;font-size:1rem;padding:.9rem 1.05rem}
+    .fnote{font-size:.98rem}
+    .vocab{font-size:.8rem}
+
+    .vid{max-width:none}
+    .vidmeta{font-size:.66rem}
+    .prow{grid-template-columns:1fr;gap:.7rem}
+    .prow img{max-width:14rem}
+
+    .cmpwrap{overflow-x:visible;margin-top:1rem}
+    .cmp{min-width:0;font-size:.95rem;display:block}
+    .cmp thead{display:none}
+    .cmp tbody,.cmp tr,.cmp th,.cmp td{display:block;width:auto}
+    .cmp tr{border-bottom:1px solid var(--rule);padding-bottom:.7rem;margin-bottom:.7rem}
+    .cmp tr:last-child{border-bottom:0;margin-bottom:0}
+    .cmp th.rowh{width:auto;white-space:normal;font-size:.63rem;padding:0 0 .4rem;border-bottom:0}
+    .cmp td{padding:.28rem 0 .28rem .85rem;border-bottom:0;border-left:2px solid var(--rule);margin-bottom:.3rem}
+    .cmp td[data-p]::before{
+      content:attr(data-p);display:block;
+      font-family:var(--mono);font-size:.6rem;letter-spacing:.11em;
+      text-transform:uppercase;color:var(--accent);margin-bottom:.12rem;
+    }
+    .cmp tr.here td,.cmp tr.risk td{background:none}
+    .cmp tr.here{background:var(--accent-soft);border-radius:8px;padding:.7rem .8rem}
+    .cmp tr.risk{background:var(--warn-soft);border-radius:8px;padding:.7rem .8rem}
+    .cmp tr.risk td{border-left:0;padding-left:0}
+    .asof{font-size:.58rem;line-height:1.5}
+
+    .titlegrid{grid-template-columns:1fr;gap:1.8rem;align-items:start}
+    .getit{align-items:flex-start}
+    .getit .qr svg{width:8.5rem}
+
+    footer{font-size:.62rem;padding:.7rem 1.25rem}
+    #notes{right:.75rem;left:.75rem;width:auto;max-height:60vh}
+  }
+
+  @media (max-width:780px) and (orientation:landscape){
+    .slide{min-height:auto}
+  }
 </style>
 </head>
 <body>
 
 <!-- 1 -->
 <section class="slide on" data-t="0:00">
-  <div class="eyebrow">Apprenti · Session 1 of 5</div>
-  <h1>Foundations of AI</h1>
-  <p class="lede" style="margin-top:1.8rem">Understanding the possibilities — what it can do, what it can't, and where the line is.</p>
-  <p class="lede" style="margin-top:2.4rem;color:var(--mute);font-size:1.05rem">Michael Vanderpool · September 4, 2026</p>
+  <div class="titlegrid">
+    <div>
+      <div class="eyebrow">Apprenti · Session 1 of 5</div>
+      <h1>Foundations of AI</h1>
+      <p class="lede" style="margin-top:1.8rem">Understanding the possibilities — what it can do, what it can't, and where the line is.</p>
+      <p class="lede" style="margin-top:2.4rem;color:var(--mute);font-size:1.05rem">Michael Vanderpool · September 4, 2026</p>
+    </div>
+    <a class="getit" href="https://vanderpoolteacher.github.io/ai-foundations/">
+      <span class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="currentColor" d="M0 0.5h7m1 0h1m1 0h2m1 0h1m2 0h8m2 0h7m-33 1h1m5 0h1m1 0h1m1 0h2m1 0h1m4 0h1m4 0h2m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m3 0h2m5 0h1m1 0h1m4 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m5 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h2m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h1m2 0h2m3 0h1m1 0h1m1 0h2m3 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h3m3 0h1m2 0h2m1 0h1m2 0h2m-25 1h1m1 0h2m1 0h3m2 0h2m2 0h1m2 0h3m1 0h1m4 0h1m2 0h1m1 0h2m-32 1h2m1 0h1m3 0h1m1 0h1m3 0h1m1 0h1m1 0h6m2 0h2m1 0h2m1 0h1m-31 1h2m2 0h3m2 0h1m2 0h1m1 0h2m4 0h2m1 0h1m1 0h3m1 0h2m-33 1h1m1 0h1m1 0h1m3 0h2m1 0h4m1 0h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m-33 1h1m2 0h1m2 0h3m1 0h1m7 0h1m3 0h1m1 0h2m1 0h3m1 0h2m-31 1h4m5 0h3m2 0h1m1 0h1m1 0h1m3 0h1m4 0h3m-32 1h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h3m2 0h2m1 0h1m3 0h4m-29 1h1m1 0h1m3 0h7m2 0h1m1 0h4m1 0h1m1 0h6m-31 1h9m1 0h1m1 0h1m1 0h2m2 0h5m2 0h2m1 0h3m-31 1h1m3 0h1m4 0h1m1 0h1m3 0h1m1 0h1m2 0h5m1 0h1m1 0h2m1 0h2m-33 1h1m1 0h2m1 0h2m2 0h3m1 0h5m3 0h1m2 0h2m1 0h2m1 0h1m-31 1h6m2 0h1m1 0h1m1 0h2m1 0h2m5 0h1m1 0h1m3 0h1m-25 1h7m2 0h2m3 0h2m1 0h1m1 0h1m5 0h3m-32 1h1m1 0h1m1 0h1m3 0h1m1 0h6m2 0h2m3 0h1m2 0h1m2 0h1m2 0h1m-31 1h2m1 0h2m4 0h3m2 0h3m2 0h7m2 0h3m-32 1h1m2 0h1m2 0h4m1 0h2m2 0h1m1 0h1m5 0h3m1 0h1m3 0h1m-33 1h1m1 0h1m1 0h4m3 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h5m-21 1h3m2 0h7m1 0h1m1 0h2m3 0h2m-30 1h7m1 0h2m6 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m-29 1h1m5 0h1m1 0h2m4 0h1m1 0h1m3 0h5m3 0h4m-32 1h1m1 0h3m1 0h1m4 0h2m1 0h2m1 0h1m1 0h1m1 0h8m1 0h3m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m4 0h1m1 0h4m3 0h1m1 0h2m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m2 0h2m3 0h1m1 0h1m1 0h2m1 0h1m-30 1h1m5 0h1m4 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h2m3 0h1m-33 1h7m1 0h3m1 0h1m2 0h3m3 0h1m1 0h1m2 0h1m1 0h1m1 0h1"/></svg></span>
+      <span class="getit-t">Slides and links</span>
+      <span class="getit-u">vanderpoolteacher.github.io/ai-foundations</span>
+    </a>
+  </div>
 </section>
 
 <!-- 2 -->
@@ -352,27 +447,27 @@
       <tbody>
         <tr>
           <th class="rowh">Chat &amp; drafting</th>
-          <td>The default one. Biggest ecosystem, and it makes images too.</td>
-          <td>Longer documents and careful editing. Fewer bells.</td>
-          <td>Drafts <b>inside</b> Docs and Gmail, against your own files.</td>
+          <td data-p="ChatGPT">The default one. Biggest ecosystem, and it makes images too.</td>
+          <td data-p="Claude">Longer documents and careful editing. Fewer bells.</td>
+          <td data-p="Gemini">Drafts <b>inside</b> Docs and Gmail, against your own files.</td>
         </tr>
         <tr>
           <th class="rowh">Code</th>
-          <td>Strong, and the most tutorials written for it.</td>
-          <td>Strong, and it will <b>edit real files</b>, not just print snippets.</td>
-          <td>Strong, and closest to Google&rsquo;s own stack.</td>
+          <td data-p="ChatGPT">Strong, and the most tutorials written for it.</td>
+          <td data-p="Claude">Strong, and it will <b>edit real files</b>, not just print snippets.</td>
+          <td data-p="Gemini">Strong, and closest to Google&rsquo;s own stack.</td>
         </tr>
         <tr class="here">
           <th class="rowh">Where it lives</th>
-          <td>A separate app you go to.</td>
-          <td>A separate app, plus Slack.</td>
-          <td><b>Already inside Workspace.</b> Nothing to install.</td>
+          <td data-p="ChatGPT">A separate app you go to.</td>
+          <td data-p="Claude">A separate app, plus Slack.</td>
+          <td data-p="Gemini"><b>Already inside Workspace.</b> Nothing to install.</td>
         </tr>
         <tr>
           <th class="rowh">The catch</th>
-          <td>Confident about things it has not checked.</td>
-          <td>No image generation. Smaller ecosystem.</td>
-          <td>Your admin decides what is switched on.</td>
+          <td data-p="ChatGPT">Confident about things it has not checked.</td>
+          <td data-p="Claude">No image generation. Smaller ecosystem.</td>
+          <td data-p="Gemini">Your admin decides what is switched on.</td>
         </tr>
         <tr class="risk">
           <th class="rowh">Watch out</th>
@@ -502,12 +597,11 @@
 
 <footer><span id="tm"></span><span id="ct"></span></footer>
 <div class="nav"><i id="bar"></i></div>
-
 <script>
 (function(){
   var s=[].slice.call(document.querySelectorAll('.slide')),i=0,n=s.length;
   var ct=document.getElementById('ct'),tm=document.getElementById('tm'),
-      bar=document.getElementById('bar'),nb=null,np=null;
+      bar=document.getElementById('bar');
   function show(k){
     i=Math.max(0,Math.min(n-1,k));
     s.forEach(function(el,j){el.classList.toggle('on',j===i)});
