@@ -87,7 +87,7 @@
   .vs dd{margin:.15rem 0 0;font-size:clamp(.82rem,1.2vw,1rem);line-height:1.4;color:var(--body)}
   .vs dd b{color:var(--ink);font-weight:700}
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
-  .cols.three{grid-template-columns:repeat(3,1fr)}
+  .cols.three{grid-template-columns:repeat(3,1fr);align-items:stretch}
   .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:clamp(1.1rem,2.2vw,1.8rem)}
   .card h3{font-family:var(--display);font-weight:700;font-size:clamp(1.1rem,2vw,1.6rem);margin:0 0 .6rem;letter-spacing:-.01em}
   .card p{margin:0;color:var(--body);font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.5}
@@ -163,6 +163,21 @@
   .egslabel{font-family:var(--mono);font-size:clamp(.6rem,.85vw,.72rem);letter-spacing:.12em;
             text-transform:uppercase;color:var(--mute);margin-top:1.5rem}
   .egslabel + .egs{margin-top:.6rem}
+
+  .uses{list-style:none;margin:.9rem 0 0;padding:0;display:flex;flex-direction:column;gap:.6rem;max-width:none}
+  .uses li{display:block;position:relative;padding-left:0;font-size:clamp(.82rem,1.2vw,1rem);
+           line-height:1.4;color:var(--body)}
+  .uses li::before{display:none}
+  .uses .kind{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;
+              text-transform:uppercase;color:var(--accent);margin-bottom:.15rem}
+  .uses li.acts .kind{color:var(--warn)}
+  .uses li b{color:var(--ink);font-weight:700}
+  .card .prod{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+              color:var(--mute);display:block;margin-top:.15rem}
+
+  .vs .col.bad{border-color:var(--warn);background:var(--warn-soft)}
+  .vs .col.bad .sub{color:var(--warn)}
+  .vs .col.bad dt{color:var(--warn)}
 
   .big{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5vw,4rem);letter-spacing:-.03em;line-height:1.05;margin:0 0 1rem;text-wrap:balance}
   .rule-line{height:3px;background:var(--accent);width:4.5rem;margin:0 0 2rem;border-radius:2px}
@@ -445,6 +460,46 @@
 
 <!-- 14 -->
 <section class="slide" data-t="0:21">
+  <div class="eyebrow">What it actually does in there</div>
+  <h2 class="wide">The same three kinds, in software you already have open</h2>
+  <div class="cols three">
+    <div class="card">
+      <span class="tag">Google Workspace</span>
+      <h3>Gemini</h3>
+      <span class="prod">Gmail &middot; Docs &middot; Sheets &middot; Meet</span>
+      <ul class="uses">
+        <li><span class="kind">Sorts</span>Catch you up on a <b>forty-message thread</b> you were copied into on Friday.</li>
+        <li><span class="kind">Writes</span>Draft the reply, or a first pass at a doc, <b>against files already in your Drive.</b></li>
+        <li class="acts"><span class="kind">Acts</span>Meet takes the notes itself and <b>sends them round afterwards.</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Slack</span>
+      <h3>Slack AI</h3>
+      <span class="prod">Channels &middot; search &middot; huddles</span>
+      <ul class="uses">
+        <li><span class="kind">Sorts</span><b>Recap a channel</b> you ignored for a week, in one paragraph.</li>
+        <li><span class="kind">Writes</span>Answer &ldquo;what did we decide about X&rdquo; <b>in a sentence, not ten links.</b></li>
+        <li class="acts"><span class="kind">Acts</span>Workflows that <b>route a request to the right person</b> without anyone chasing it.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Salesforce</span>
+      <h3>Einstein</h3>
+      <span class="prod">Records &middot; email &middot; agents</span>
+      <ul class="uses">
+        <li><span class="kind">Sorts</span><b>Scores which leads are worth calling.</b> The oldest thing on this slide &mdash; years older than ChatGPT.</li>
+        <li><span class="kind">Writes</span>Drafts the follow-up email <b>from what is already on the record.</b></li>
+        <li class="acts"><span class="kind">Acts</span><b>Logs the call, updates the fields, sets the next task.</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="kicker"><b>This is the safest version of AI you will touch</b> &mdash; it runs on your work account, under the agreement your employer already signed. It is also the version <b>somebody else decides you get.</b></div>
+  <div class="asof">What these products can do as of September 2026 &middot; what is switched on for you is an admin setting, not a given</div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-t="0:22">
   <div class="eyebrow">The three you will actually be handed</div>
   <h2 class="wide">Same idea, three doors</h2>
   <div class="cmpwrap">
@@ -492,8 +547,35 @@
   <div class="asof">Shape of the field as of September 2026 &middot; rankings change every few months, this table&rsquo;s rows do not</div>
 </section>
 
-<!-- 15 -->
+<!-- 16 -->
 <section class="slide" data-t="0:23">
+  <div class="eyebrow">The risk nobody logged</div>
+  <h2 class="wide">Shadow IT hid a file. Shadow AI hands over the contents.</h2>
+  <div class="vs">
+    <div class="col">
+      <h3>Shadow IT</h3>
+      <div class="sub">The problem we already know</div>
+      <dl>
+        <div><dt>What it is</dt><dd>Staff using software nobody approved. A personal Dropbox, a side spreadsheet, an app on a phone.</dd></div>
+        <div><dt>How you find out</dt><dd>There is a signup, an install, or an invoice. <b>It shows up somewhere.</b></dd></div>
+        <div><dt>Worst case</dt><dd>The file is in the wrong place. <b>You can go and get it back.</b></dd></div>
+      </dl>
+    </div>
+    <div class="col bad">
+      <h3>Shadow AI</h3>
+      <div class="sub">Same instinct, worse ending</div>
+      <dl>
+        <div><dt>What it is</dt><dd>A browser tab and a personal login. <b>Nothing installed, nothing billed, nothing logged.</b></dd></div>
+        <div><dt>How you find out</dt><dd>You don&rsquo;t. The output lands in a document with <b>no sign anything touched it</b> &mdash; so nobody knows to check it.</dd></div>
+        <div><dt>Worst case</dt><dd>The roster, the contract, the SSNs are now inside someone else&rsquo;s system on consumer terms. <b>You cannot unpaste it.</b></dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="kicker warn"><b>Nobody doing this is being sneaky.</b> They are trying to be fast, and it usually means the approved path is missing or slower. That is why a ban does not work and <b>a sanctioned tool does.</b></div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-t="0:24">
   <div class="eyebrow">How normal software works</div>
   <h2 class="wide">A recipe gives the same result every time. A program can make decisions.</h2>
   <div class="cols">
@@ -503,7 +585,7 @@
   <div class="kicker">Run either one twice and you get the same answer twice.</div>
 </section>
 
-<!-- 16 -->
+<!-- 18 -->
 <section class="slide" data-t="0:26">
   <div class="eyebrow">Why AI is different</div>
   <h2 class="wide">Run the same prompt twice and you can get two different answers</h2>
@@ -512,7 +594,7 @@
   <div class="kicker warn">No other software on your computer behaves like this. <b>It is the single reason all three rules exist.</b></div>
 </section>
 
-<!-- 17 -->
+<!-- 19 -->
 <section class="slide" data-t="0:30">
   <div class="eyebrow">Something I built · 1 of 2</div>
   <h2 class="wide">Photos of business cards become contact records</h2>
@@ -520,7 +602,7 @@
   <div class="fnote"><b>If it cannot read a digit, it leaves the field blank.</b> It never guesses the last number of a phone. A blank looks unfinished; a wrong number is a stranger.</div>
 </section>
 
-<!-- 18 -->
+<!-- 20 -->
 <section class="slide" data-t="0:34">
   <div class="eyebrow">Something I built · 2 of 2</div>
   <h2 class="wide">A screenshot becomes a calendar event</h2>
@@ -528,7 +610,7 @@
   <div class="fnote"><b>&ldquo;Tuesday at 3&rdquo; stops the whole thing.</b> A screenshot has no year in it, so it will not create the event &mdash; it asks me which Tuesday. That is rule two, doing its job.</div>
 </section>
 
-<!-- 19 -->
+<!-- 21 -->
 <section class="slide" data-t="0:38">
   <div class="eyebrow">Where this is going &middot; agentic AI</div>
   <h2 class="wide">That&rsquo;s a system, not a prompt</h2>
@@ -540,7 +622,7 @@
   <div class="kicker"><b>That third kind from earlier &mdash; agentic &mdash; is just this with the gate in it.</b> A prompt gets you one answer. A system does the same job every time, with the same guardrails, whether I am paying attention or not. <b>The gate is what makes it safe to hand work to.</b></div>
 </section>
 
-<!-- 20 -->
+<!-- 22 -->
 <section class="slide" data-t="0:41">
   <div class="eyebrow">Your turn · 8 minutes</div>
   <h2>Write down one task from your week</h2>
@@ -553,7 +635,7 @@
   <div class="kicker">A real task from this week. Not &ldquo;write emails&rdquo; — <b>&ldquo;draft the reminder to apprentices who missed Monday's check-in.&rdquo;</b></div>
 </section>
 
-<!-- 21 -->
+<!-- 23 -->
 <section class="slide" data-t="0:51">
   <div class="eyebrow">Check · which of these should you actually do?</div>
   <h2 class="wide">Which of these three should you actually do?</h2>
@@ -565,7 +647,7 @@
   <div class="kicker"><b>AI drafts and sorts. People decide and check.</b></div>
 </section>
 
-<!-- 22 -->
+<!-- 24 -->
 <section class="slide" data-t="0:58">
   <div class="eyebrow">Before you go</div>
   <h2 class="wide">Try it once this week</h2>
@@ -575,7 +657,7 @@
   <p class="lede">Gemini and prompt engineering: getting better output, using the task you just wrote down.</p><div class="kicker" style="margin-top:1.8rem">Across the five sessions we move from <b>generating content</b> to <b>building systems</b> &mdash; things that run the same way every time, without you in the loop for every step.</div>
 </section>
 
-<!-- 23 -->
+<!-- 25 -->
 <section class="slide" data-t="0:59">
   <div class="eyebrow">Watch later &middot; optional</div>
   <h2 class="wide">Where to go next, if you want to</h2>
