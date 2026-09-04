@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Foundations — session materials</title>
+<meta name="description" content="Slides and materials from a five-session series on using AI at work.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --bg:#FBFAF8; --ink:#14161A; --body:#3A4048; --mute:#6B727C;
+    --rule:#DEDBD5; --card:#FFFFFF;
+    --accent:#1F5F5B; --accent-soft:#E3EFED;
+    --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --text:"Public Sans","Helvetica Neue",Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#14161A; --ink:#F1F0ED; --body:#A6ACB5; --mute:#79808A;
+      --rule:#2A2E35; --card:#1D2025;
+      --accent:#6FB5AE; --accent-soft:#1B2E2D;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--text);line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:52rem;margin:0 auto;padding:clamp(2.5rem,8vw,5.5rem) clamp(1.25rem,5vw,2.5rem) 5rem}
+
+  .eyebrow{
+    font-family:var(--mono);font-size:.72rem;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+    margin:0 0 1.1rem;
+  }
+  h1{
+    font-family:var(--display);font-weight:800;letter-spacing:-.03em;
+    line-height:1.03;font-size:clamp(2.2rem,7vw,3.8rem);
+    margin:0 0 1rem;text-wrap:balance;
+  }
+  .lede{font-size:clamp(1.02rem,2.4vw,1.3rem);color:var(--body);margin:0;max-width:40ch}
+
+  h2{
+    font-family:var(--display);font-weight:800;letter-spacing:-.02em;
+    font-size:clamp(1.2rem,3.2vw,1.6rem);margin:0 0 1.1rem;
+  }
+  .sect{margin-top:clamp(2.8rem,7vw,4rem)}
+  .rule-line{height:3px;width:4rem;background:var(--accent);border-radius:2px;margin:0 0 1.6rem}
+
+  ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.75rem}
+
+  a.item{
+    display:flex;gap:clamp(.8rem,2.5vw,1.3rem);align-items:baseline;
+    background:var(--card);border:1px solid var(--rule);border-radius:10px;
+    padding:clamp(.9rem,2.5vw,1.2rem) clamp(1rem,3vw,1.4rem);
+    text-decoration:none;color:inherit;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  a.item > span:last-child,li.item > span:last-child{flex:1;min-width:0}
+  a.item:hover,a.item:focus-visible{border-color:var(--accent);transform:translateY(-1px)}
+  a.item:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  li.item{
+    display:flex;gap:clamp(.8rem,2.5vw,1.3rem);align-items:baseline;
+    border:1px dashed var(--rule);border-radius:10px;
+    padding:clamp(.9rem,2.5vw,1.2rem) clamp(1rem,3vw,1.4rem);
+    color:var(--mute);
+  }
+
+  .n{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;
+    color:var(--accent);flex:none;padding-top:.2rem;
+  }
+  li.item .n{color:var(--mute)}
+  .t{display:block;font-family:var(--display);font-weight:700;font-size:clamp(1rem,2.6vw,1.2rem);letter-spacing:-.01em;line-height:1.25}
+  .d{display:block;font-size:clamp(.85rem,2.1vw,.97rem);color:var(--body);margin-top:.25rem}
+  li.item .d{color:var(--mute)}
+  .meta{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--mute);margin-top:.45rem}
+
+  .note{
+    background:var(--accent-soft);border-radius:9px;
+    padding:clamp(.9rem,2.5vw,1.2rem) clamp(1rem,3vw,1.35rem);
+    font-size:clamp(.9rem,2.2vw,1.02rem);color:var(--ink);
+  }
+  .note b{font-weight:700}
+
+  footer{
+    margin-top:clamp(3rem,8vw,4.5rem);padding-top:1.5rem;
+    border-top:1px solid var(--rule);
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;
+    color:var(--mute);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Session materials</p>
+  <h1>AI Foundations</h1>
+  <p class="lede">Slides from a five-session series on what AI can do at work, what it can&rsquo;t, and where the line is.</p>
+
+  <section class="sect">
+    <div class="rule-line"></div>
+    <h2>Sessions</h2>
+    <ul class="list">
+      <li>
+        <a class="item" href="decks/session-1-foundations-of-ai.html">
+          <span class="n">01</span>
+          <span>
+            <span class="t">Foundations of AI</span>
+            <span class="d">The two kinds you&rsquo;ll meet, what a model actually is, and where the line is on real work.</span>
+            <span class="meta">September 4, 2026 &middot; 23 slides</span>
+          </span>
+        </a>
+      </li>
+      <li class="item">
+        <span class="n">02</span>
+        <span>
+          <span class="t">Gemini and prompt engineering</span>
+          <span class="d">Getting better output, using the task you wrote down in session one.</span>
+          <span class="meta">September 18, 2026 &middot; slides to follow</span>
+        </span>
+      </li>
+      <li class="item">
+        <span class="n">03</span>
+        <span>
+          <span class="t">Session three</span>
+          <span class="meta">October 1, 2026</span>
+        </span>
+      </li>
+      <li class="item">
+        <span class="n">04</span>
+        <span>
+          <span class="t">Session four</span>
+          <span class="meta">October 16, 2026</span>
+        </span>
+      </li>
+      <li class="item">
+        <span class="n">05</span>
+        <span>
+          <span class="t">Session five</span>
+          <span class="meta">November 6, 2026</span>
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="sect">
+    <div class="rule-line"></div>
+    <h2>Watch later</h2>
+    <ul class="list">
+      <li>
+        <a class="item" href="https://www.youtube.com/watch?v=qv6UVOQ0F44">
+          <span class="n">▶</span>
+          <span>
+            <span class="t">MarI/O — Machine Learning for Video Games</span>
+            <span class="d">Nobody programmed it to jump. It learned by failing. Start here.</span>
+            <span class="meta">SethBling</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="item" href="https://www.youtube.com/watch?v=qYNweeDHiyU">
+          <span class="n">▶</span>
+          <span>
+            <span class="t">AI, Machine Learning, Deep Learning and Generative AI Explained</span>
+            <span class="d">Ten minutes on how the four terms nest together.</span>
+            <span class="meta">IBM Technology</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="item" href="https://www.youtube.com/playlist?list=PLf-bJpKeji6T054DPLgMEgAj8rySAwFWJ">
+          <span class="n">▶</span>
+          <span>
+            <span class="t">Learn To Use AI</span>
+            <span class="d">An ongoing series on actually using the tools. Dip in anywhere.</span>
+            <span class="meta">Matt Wolfe &middot; playlist</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="sect">
+    <div class="note">
+      <b>None of this is homework.</b> The one thing to actually do is the task you wrote down.
+    </div>
+  </section>
+
+  <footer>
+    Michael Vanderpool &middot; use arrow keys or click to move through the slides
+  </footer>
+
+</div>
+</body>
+</html>

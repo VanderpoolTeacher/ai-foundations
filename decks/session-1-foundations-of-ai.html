@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Session 1 — Foundations of AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --bg:#FBFAF8; --ink:#14161A; --body:#3A4048; --mute:#6B727C;
+    --rule:#DEDBD5; --card:#FFFFFF;
+    --accent:#1F5F5B; --accent-soft:#E3EFED;
+    --warn:#A8442A; --warn-soft:#F6E8E3;
+    --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --text:"Public Sans","Helvetica Neue",Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);overflow:hidden}
+
+  .slide{
+    position:absolute;inset:0;display:none;
+    flex-direction:column;justify-content:center;
+    padding:clamp(2rem,6vw,5.5rem) clamp(2.5rem,8vw,7rem);
+  }
+  .slide.on{display:flex;animation:in .28s cubic-bezier(.2,.7,.3,1) both}
+  @keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+
+  .eyebrow{
+    font-family:var(--mono);font-size:clamp(.65rem,.9vw,.8rem);font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:1.6rem;
+  }
+  h1{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1.02;
+     font-size:clamp(2.4rem,6.6vw,5.4rem);margin:0;text-wrap:balance}
+  h2{font-family:var(--display);font-weight:800;letter-spacing:-.025em;line-height:1.06;
+     font-size:clamp(1.9rem,4.6vw,3.7rem);margin:0 0 2rem;text-wrap:balance;max-width:20ch}
+  h2.wide{max-width:28ch}
+  .lede{font-size:clamp(1.05rem,1.7vw,1.5rem);color:var(--body);max-width:46ch;line-height:1.5;margin:0}
+
+  ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.7rem);max-width:56ch}
+  li{display:block;position:relative;padding-left:1.6rem;font-size:clamp(1.05rem,1.9vw,1.65rem);line-height:1.35;color:var(--ink)}
+  li::before{content:"";position:absolute;left:0;top:.5em;width:.55rem;height:.55rem;border-radius:2px;background:var(--accent)}
+  li.warn::before{background:var(--warn)}
+  li small{display:block;font-size:.72em;color:var(--body);margin-top:.35rem;font-weight:400;line-height:1.45}
+  li b{font-weight:700}
+
+
+  .flow{display:flex;align-items:stretch;gap:.5rem;margin-top:1.4rem}
+  .fstep{flex:1;background:var(--card);border:1px solid var(--rule);border-radius:8px;
+         padding:clamp(.7rem,1.4vw,1rem);display:flex;flex-direction:column;gap:.3rem;min-width:0}
+  .fstep .n{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--mute)}
+  .fstep .t{font-family:var(--display);font-weight:700;font-size:clamp(.85rem,1.35vw,1.1rem);line-height:1.15;letter-spacing:-.01em}
+  .fstep .d{font-size:clamp(.7rem,1.05vw,.88rem);color:var(--body);line-height:1.35}
+  .fstep.gate{border:2px solid var(--accent);background:var(--accent-soft)}
+  .fstep.gate .n{color:var(--accent)}
+  .farrow{align-self:center;color:var(--mute);font-size:1.15rem;flex:none}
+  .fnote{margin-top:1.1rem;padding:.85rem 1.1rem;background:var(--warn-soft);border-radius:8px;
+         font-size:clamp(.9rem,1.4vw,1.15rem);line-height:1.45;color:var(--ink);max-width:64ch}
+  .fnote b{font-weight:700}
+
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.5vw,2rem);margin-top:1.2rem}
+  .vs .col{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:clamp(1rem,2vw,1.5rem)}
+  .vs .col h3{font-family:var(--display);font-weight:800;font-size:clamp(1.1rem,2.1vw,1.6rem);margin:0 0 .1rem;letter-spacing:-.015em}
+  .vs .col .sub{font-size:clamp(.8rem,1.15vw,.95rem);color:var(--accent);font-weight:700;margin-bottom:.9rem}
+  .vs dl{margin:0;display:flex;flex-direction:column;gap:.65rem}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,3vw,2.6rem);margin-top:1.4rem}
+  .pair .k{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,3vw,2.3rem);letter-spacing:-.02em;margin-bottom:.3rem}
+  .pair .v{font-size:clamp(1rem,1.7vw,1.4rem);color:var(--accent);font-weight:700;margin-bottom:.6rem}
+  .pair .w{font-size:clamp(.9rem,1.35vw,1.1rem);color:var(--body);line-height:1.45}
+  .detail{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,2rem) clamp(1.6rem,4vw,3.4rem);margin-top:1.4rem;max-width:62rem}
+  .detail dt{font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem}
+  .detail dd{margin:0;font-size:clamp(.95rem,1.5vw,1.25rem);line-height:1.45;color:var(--body)}
+  .detail dd b{color:var(--ink);font-weight:700}
+  .detail > div{min-width:0}
+  .egs{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.8rem,2vw,1.6rem);margin-top:1.5rem}
+  .egs > div{border-top:2px solid var(--accent);padding-top:.7rem}
+  .egs .yr{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--accent);display:block;margin-bottom:.3rem}
+  .egs .th{font-weight:700;font-size:clamp(.92rem,1.4vw,1.15rem);line-height:1.25;color:var(--ink);display:block;margin-bottom:.25rem}
+  .egs .ds{font-size:clamp(.78rem,1.1vw,.95rem);line-height:1.4;color:var(--body)}
+  .vs dt{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--mute)}
+  .vs dd{margin:.15rem 0 0;font-size:clamp(.82rem,1.2vw,1rem);line-height:1.4;color:var(--body)}
+  .vs dd b{color:var(--ink);font-weight:700}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
+  .cols.three{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:clamp(1.1rem,2.2vw,1.8rem)}
+  .card h3{font-family:var(--display);font-weight:700;font-size:clamp(1.1rem,2vw,1.6rem);margin:0 0 .6rem;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--body);font-size:clamp(.9rem,1.35vw,1.1rem);line-height:1.5}
+  .card .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem}
+  .card.bad .tag{color:var(--warn)}
+
+  .vid{position:relative;width:100%;max-width:58rem;aspect-ratio:16/9;margin-top:1.1rem;
+       border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:#000}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vidmeta{font-family:var(--mono);font-size:clamp(.62rem,.9vw,.75rem);letter-spacing:.08em;
+           color:var(--mute);margin-top:.7rem}
+  .vidmeta a{color:var(--mute);text-decoration:none;border-bottom:1px solid var(--rule)}
+  @media print{ .vid{display:none} }
+
+  .plist{display:flex;flex-direction:column;gap:clamp(.6rem,1.2vw,.9rem);margin-top:1.1rem;max-width:64rem}
+  .prow{display:grid;grid-template-columns:clamp(7rem,13vw,11rem) 1fr;gap:clamp(.9rem,2vw,1.5rem);
+        align-items:center;background:var(--card);border:1px solid var(--rule);
+        border-radius:10px;padding:clamp(.7rem,1.3vw,1rem)}
+  .prow img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;display:block;background:#000}
+  .prow .pt{font-family:var(--display);font-weight:700;letter-spacing:-.01em;
+            font-size:clamp(1rem,1.7vw,1.35rem);line-height:1.2;color:var(--ink)}
+  .prow .pw{font-size:clamp(.82rem,1.2vw,1rem);color:var(--body);line-height:1.4;margin-top:.3rem}
+  .prow .pu{font-family:var(--mono);font-size:clamp(.6rem,.88vw,.74rem);color:var(--mute);margin-top:.45rem;
+            letter-spacing:.04em;word-break:break-all}
+  .prow .pu b{color:var(--accent);font-weight:500}
+
+  .vocab{margin-top:1.05rem;font-family:var(--mono);font-weight:500;
+         font-size:clamp(.72rem,1.15vw,.92rem);line-height:1.55;color:var(--mute);
+         max-width:64ch;letter-spacing:.01em}
+  .vocab b{color:var(--accent);font-weight:500}
+
+  .cmpwrap{margin-top:1.2rem;overflow-x:auto;max-width:100%}
+  .cmp{border-collapse:collapse;width:100%;min-width:44rem;font-size:clamp(.8rem,1.25vw,1.02rem)}
+  .cmp th,.cmp td{text-align:left;vertical-align:top;padding:.62rem .9rem;border-bottom:1px solid var(--rule)}
+  .cmp thead th{border-bottom:2px solid var(--accent);padding-bottom:.5rem}
+  .cmp thead th .nm{font-family:var(--display);font-weight:800;letter-spacing:-.015em;
+                    font-size:clamp(1rem,1.75vw,1.4rem);color:var(--ink);display:block;line-height:1.1}
+  .cmp thead th .vn{font-family:var(--mono);font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;
+                    color:var(--mute);display:block;margin-top:.2rem}
+  .cmp th.rowh{font-family:var(--mono);font-size:.61rem;letter-spacing:.12em;text-transform:uppercase;
+               color:var(--accent);font-weight:500;width:9.5rem;white-space:nowrap;padding-left:0}
+  .cmp td{color:var(--body);line-height:1.4}
+  .cmp td b{color:var(--ink);font-weight:700}
+  .cmp tr.risk th.rowh{color:var(--warn)}
+  .cmp tr.risk td{background:var(--warn-soft)}
+  .cmp tr.here td{background:var(--accent-soft)}
+  .asof{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+        color:var(--mute);margin-top:.75rem}
+
+  .big{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5vw,4rem);letter-spacing:-.03em;line-height:1.05;margin:0 0 1rem;text-wrap:balance}
+  .rule-line{height:3px;background:var(--accent);width:4.5rem;margin:0 0 2rem;border-radius:2px}
+  .kicker{margin-top:2.2rem;padding:1.1rem 1.4rem;background:var(--accent-soft);border-radius:8px;
+          font-size:clamp(1rem,1.6vw,1.35rem);line-height:1.45;max-width:56ch;color:var(--ink)}
+  .kicker b{font-weight:700}
+  .kicker.warn{background:var(--warn-soft)}
+
+  footer{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;
+         align-items:center;padding:.9rem clamp(1.2rem,3vw,2.2rem);
+         font-family:var(--mono);font-size:.72rem;color:var(--mute);pointer-events:none}
+  .nav{position:fixed;inset:auto 0 0 0;height:3px;background:var(--rule)}
+  .nav i{display:block;height:100%;background:var(--accent);transition:width .25s ease}
+
+  #notes{position:fixed;right:1.2rem;bottom:3.2rem;width:min(30rem,42vw);max-height:52vh;overflow:auto;
+         background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:1.1rem 1.3rem;
+         box-shadow:0 12px 40px rgba(0,0,0,.12);display:none;font-size:.9rem;line-height:1.55;color:var(--body)}
+  #notes.on{display:block}
+  #notes b{color:var(--ink)}
+  #notes .h{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+  @media print{ .slide{display:flex!important;position:relative;page-break-after:always;height:100vh} #notes,footer,.nav{display:none} }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide on" data-t="0:00">
+  <div class="eyebrow">Apprenti · Session 1 of 5</div>
+  <h1>Foundations of AI</h1>
+  <p class="lede" style="margin-top:1.8rem">Understanding the possibilities — what it can do, what it can't, and where the line is.</p>
+  <p class="lede" style="margin-top:2.4rem;color:var(--mute);font-size:1.05rem">Michael Vanderpool · September 4, 2026</p>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-t="0:01">
+  <div class="eyebrow">What this session covers</div>
+  <h2 class="wide">A practical overview of what AI can and cannot do</h2>
+  <p class="lede">Learn the fundamentals of artificial intelligence, including machine learning and generative AI, and explore how these technologies are transforming the workplace.</p>
+  <p class="lede" style="margin-top:1.2rem">This session provides a practical overview of what AI can and cannot do, along with key considerations for responsible use.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-t="0:02">
+  <div class="eyebrow">After this training you will be able to</div>
+  <h2 class="wide">Three things, and one of them is the real target</h2>
+  <ul>
+    <li><b>Describe the main types of AI</b> &mdash; machine learning and generative AI &mdash; and what each can and cannot do.</li>
+    <li><b>Identify realistic AI use cases</b> within your own role and department.</li>
+    <li><b>Recognize and mitigate risks</b> related to AI bias, data privacy, and security when using AI at work.</li>
+  </ul>
+  <div class="kicker">You will leave with <b>one task from your own week</b> written down, and one specific thing that could go wrong with it.</div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-t="0:03">
+  <div class="eyebrow">Start here · my three rules</div>
+  <h2 class="wide">AI drafts it. I send it.</h2>
+  <ul>
+    <li><b>AI drafts, a person sends.</b><small>Sending is a decision. Decisions stay with people.</small></li>
+    <li><b>If it doesn&rsquo;t know, it guesses.</b><small>It never tells you what it wasn&rsquo;t sure about. A screenshot saying &ldquo;Tuesday at 3&rdquo; has no year in it &mdash; it will pick a Tuesday and sound certain. Make it ask you instead.</small></li>
+    <li><b>Verify before you trust it.</b><small>&ldquo;No error&rdquo; is not the same as &ldquo;it worked.&rdquo; Read the result back.</small></li>
+  </ul>
+  <div class="kicker">Everything else in this hour is an explanation of <b>why these three rules exist.</b></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-t="0:07">
+  <div class="eyebrow">What goes wrong</div>
+  <h2>Bias, data privacy, and security</h2>
+  <div class="cols three">
+    <div class="card bad"><span class="tag">Bias</span><h3>It repeats the past</h3><p>It learned from what already happened. If past decisions favoured one kind of person, it will too — not because it is broken, but because it is working correctly on the wrong data.</p></div>
+    <div class="card bad"><span class="tag">Privacy</span><h3>The prompt box is a public website</h3><p>Anything pasted into a public tool has left the building. Apprentice names, SSNs, salary data, employer contracts.</p></div>
+    <div class="card bad"><span class="tag">Security</span><h3>Wrong in ways that look right</h3><p>A made-up citation. A policy that doesn't exist. A number that's close. If nobody checks, it becomes the record.</p></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-t="0:10">
+  <div class="eyebrow">The two kinds you will meet</div>
+  <h2 class="wide">One learns to sort. One learns to write.</h2>
+  <div class="pair">
+    <div><div class="k">Machine learning</div><div class="v">It sorts and predicts</div>
+      <div class="w">You have been using it for twenty years without calling it AI.</div></div>
+    <div><div class="k">Generative AI</div><div class="v">It drafts and produces</div>
+      <div class="w">ChatGPT, Gemini, Copilot. The first one you talk to &mdash; which is why it feels new.</div></div>
+  </div>
+  <div class="egs">
+    <div><span class="yr">1990s</span><span class="th">The text from your bank</span><span class="ds">&ldquo;Did you just spend $340 in Ohio?&rdquo; Fraud detection has run on this since before the internet was mainstream.</span></div>
+    <div><span class="yr">2004</span><span class="th">Your spam folder</span><span class="ds">Gmail shipped with it. Nobody wrote a rule for what spam looks like &mdash; it learned from what people marked.</span></div>
+    <div><span class="yr">MID-2000s</span><span class="th">What Netflix puts on the front page</span><span class="ds">Sorted for you, from what people like you watched.</span></div>
+    <div><span class="yr">2017</span><span class="th">Your phone unlocking at your face</span><span class="ds">Face ID. Trained on examples of your face, not programmed with a description of it.</span></div>
+  </div>
+  <div class="kicker">Neither one was programmed with rules. <b>Both learned from examples.</b></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-t="0:11">
+  <div class="eyebrow">The word you will hear constantly</div>
+  <h2 class="wide">A model is what is left after the learning</h2>
+  <p class="lede">Both kinds work the same way underneath. Examples go in, training runs once, and the thing left over is the model. <b>That leftover is what you are talking to.</b></p>
+  <div class="flow">
+    <div class="fstep"><div class="n">01</div><div class="t">Examples</div><div class="d">Emails, photos, text. Enormous amounts of it.</div></div>
+    <div class="farrow">&rarr;</div>
+    <div class="fstep"><div class="n">02</div><div class="t">Training</div><div class="d">Runs once, takes months, costs a fortune. Then it is finished.</div></div>
+    <div class="farrow">&rarr;</div>
+    <div class="fstep gate"><div class="n">03</div><div class="t">The model</div><div class="d">A file of numbers. <b>The examples are not inside it.</b></div></div>
+    <div class="farrow">&rarr;</div>
+    <div class="fstep"><div class="n">04</div><div class="t">Your answer</div><div class="d">Built fresh each time from that file. Nothing is looked up.</div></div>
+  </div>
+  <div class="kicker" style="margin-top:1.5rem">A chef who has tasted ten thousand soups can judge a new one instantly &mdash; and <b>cannot hand you the ten thousand recipes.</b> Same trade.</div>
+  <div class="vocab"><b>ChatGPT is the app you open. GPT-5 is the model inside it.</b> One model turns up in a dozen different products.</div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-t="0:12">
+  <div class="eyebrow">Machine learning</div>
+  <h2 class="wide">Show it enough examples and it finds the pattern</h2>
+  <dl class="detail">
+    <div><dt>How it works</dt><dd>Show it <b>thousands of examples that are already labelled.</b> It works out what they have in common, then applies that to something new.</dd></div>
+    <div><dt>For example</dt><dd>Ten thousand emails marked spam or not-spam. It learns what spam looks like, then sorts tomorrow's mail.</dd></div>
+    <div><dt>What you get back</dt><dd>A label, a score, or a number. <b>Never new content.</b></dd></div>
+    <div><dt>What it cannot do</dt><dd>Tell you <b>why</b> it decided that. Handle anything unlike what it has already seen.</dd></div>
+  </dl>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-t="0:15">
+  <div class="eyebrow">Machine learning &middot; watch</div>
+  <h2 class="wide">Nobody told it how to play</h2>
+  <div class="vid">
+    <iframe src="https://www.youtube-nocookie.com/embed/qv6UVOQ0F44?rel=0&amp;modestbranding=1"
+            title="MarI/O &mdash; Machine Learning for Video Games"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+  </div>
+  <div class="vidmeta">MarI/O &mdash; Machine Learning for Video Games &middot; SethBling &middot; <a href="https://www.youtube.com/watch?v=qv6UVOQ0F44">youtube.com/watch?v=qv6UVOQ0F44</a></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-t="0:15">
+  <div class="eyebrow">Generative AI</div>
+  <h2 class="wide">It predicts the most likely next word</h2>
+  <dl class="detail">
+    <div><dt>How it works</dt><dd>It read an enormous amount of text and learned <b>which words tend to follow which.</b> Given your prompt, it produces the most likely next word &mdash; one at a time.</dd></div>
+    <div><dt>For example</dt><dd>You ask for a job posting. It writes the most likely job posting, word by word.</dd></div>
+    <div><dt>What you get back</dt><dd>New content &mdash; text, images, code. <b>A first draft.</b></dd></div>
+    <div><dt>What it cannot do</dt><dd>Know what is <b>true.</b> It only knows what is likely &mdash; which is why it guesses instead of asking.</dd></div>
+  </dl>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-t="0:18">
+  <div class="eyebrow">If you want the whole map</div>
+  <h2 class="wide">The two kinds sit inside a bigger picture</h2>
+  <div class="cols" style="margin-top:.4rem">
+    <div>
+      <div class="vid" style="margin-top:0">
+        <iframe src="https://www.youtube-nocookie.com/embed/qYNweeDHiyU?rel=0&amp;modestbranding=1"
+                title="AI, Machine Learning, Deep Learning and Generative AI Explained"
+                allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <div class="vidmeta">AI, Machine Learning, Deep Learning and Generative AI Explained &middot; IBM Technology &middot; <a href="https://www.youtube.com/watch?v=qYNweeDHiyU">youtube.com/watch?v=qYNweeDHiyU</a></div>
+    </div>
+    <div>
+      <dl class="detail" style="grid-template-columns:1fr;margin-top:0;gap:1rem">
+        <div><dt>Artificial intelligence</dt><dd>The whole field. Everything below sits inside it.</dd></div>
+        <div><dt>Machine learning</dt><dd>Finds the pattern in examples. <b>Your spam filter.</b></dd></div>
+        <div><dt>Deep learning</dt><dd>Machine learning with far more layers. <b>What made the next one possible.</b></dd></div>
+        <div><dt>Generative AI</dt><dd>Produces new content. <b>The one you talk to.</b></dd></div>
+      </dl>
+      <div class="kicker" style="margin-top:1.2rem;font-size:clamp(.9rem,1.3vw,1.1rem)">You do not need this to start. <b>It is on the playlist if you want it.</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-t="0:18">
+  <div class="eyebrow">Show of hands</div>
+  <h2>Have you used AI on real work yet?</h2>
+  <ul>
+    <li>Used ChatGPT, Gemini or Copilot in the last month?</li>
+    <li>Used one for <b>actual work</b> — something you were being paid for either way?</li>
+    <li>Pasted <b>real company information</b> into one?</li>
+  </ul>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-t="0:20">
+  <div class="eyebrow">Why now</div>
+  <h2 class="wide">AI is already in Workspace, Slack and Salesforce</h2>
+  <ul>
+    <li><b>The technology isn't new.</b><small>Machine learning has filtered your spam for twenty years.</small></li>
+    <li><b>The interface changed.</b><small>Until 2022, using it meant writing code. Then it became a chat box.</small></li>
+    <li><b>It arrived at your desk anyway.</b><small>Workspace. Slack. Salesforce. Microsoft 365. Nobody asked you first.</small></li>
+  </ul>
+  <div class="kicker"><b>You're not being asked to adopt AI.</b> It's already in the tools you open every morning. The only choice left is whether you use it well or badly.</div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-t="0:21">
+  <div class="eyebrow">The three you will actually be handed</div>
+  <h2 class="wide">Same idea, three doors</h2>
+  <div class="cmpwrap">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th class="rowh"></th>
+          <th><span class="nm">ChatGPT</span><span class="vn">OpenAI</span></th>
+          <th><span class="nm">Claude</span><span class="vn">Anthropic</span></th>
+          <th><span class="nm">Gemini</span><span class="vn">Google</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="rowh">Chat &amp; drafting</th>
+          <td>The default one. Biggest ecosystem, and it makes images too.</td>
+          <td>Longer documents and careful editing. Fewer bells.</td>
+          <td>Drafts <b>inside</b> Docs and Gmail, against your own files.</td>
+        </tr>
+        <tr>
+          <th class="rowh">Code</th>
+          <td>Strong, and the most tutorials written for it.</td>
+          <td>Strong, and it will <b>edit real files</b>, not just print snippets.</td>
+          <td>Strong, and closest to Google&rsquo;s own stack.</td>
+        </tr>
+        <tr class="here">
+          <th class="rowh">Where it lives</th>
+          <td>A separate app you go to.</td>
+          <td>A separate app, plus Slack.</td>
+          <td><b>Already inside Workspace.</b> Nothing to install.</td>
+        </tr>
+        <tr>
+          <th class="rowh">The catch</th>
+          <td>Confident about things it has not checked.</td>
+          <td>No image generation. Smaller ecosystem.</td>
+          <td>Your admin decides what is switched on.</td>
+        </tr>
+        <tr class="risk">
+          <th class="rowh">Watch out</th>
+          <td colspan="3">All three have a free tier on a personal login. <b>That is exactly how work data walks out the door</b> &mdash; the tool is not the risk, the account it is signed into is.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="asof">Shape of the field as of September 2026 &middot; rankings change every few months, this table&rsquo;s rows do not</div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-t="0:23">
+  <div class="eyebrow">How normal software works</div>
+  <h2 class="wide">A recipe gives the same result every time. A program can make decisions.</h2>
+  <div class="cols">
+    <div class="card"><span class="tag">A recipe</span><h3>Fixed steps</h3><p>Same ingredients in, same cake out. Every time. No judgement anywhere in it.</p></div>
+    <div class="card"><span class="tag">A program</span><h3>Steps plus decisions</h3><p><b>If</b> the invoice is over $5,000, route it to Jody. Still predictable — you can read it and know exactly what it will do.</p></div>
+  </div>
+  <div class="kicker">Run either one twice and you get the same answer twice.</div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-t="0:26">
+  <div class="eyebrow">Why AI is different</div>
+  <h2 class="wide">Run the same prompt twice and you can get two different answers</h2>
+  <p class="lede">A recipe and a program both give you the same answer every time. That is what makes them checkable &mdash; you can read them and know what they will do.</p>
+  <p class="lede" style="margin-top:1.2rem">AI is the first tool on your desk that does not work that way.</p>
+  <div class="kicker warn">No other software on your computer behaves like this. <b>It is the single reason all three rules exist.</b></div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-t="0:30">
+  <div class="eyebrow">Something I built · 1 of 2</div>
+  <h2 class="wide">Photos of business cards become contact records</h2>
+  <div class="flow"><div class="fstep"><span class="n">INPUT</span><span class="t">Photos of cards</span><span class="d">A stack shot on a table after an event</span></div><span class="farrow">&rarr;</span><div class="fstep"><span class="n">READ</span><span class="t">Every field, per card</span><span class="d">Name, company, title, email, phone</span></div><span class="farrow">&rarr;</span><div class="fstep gate"><span class="n">GATE · ASK</span><span class="t">Where did we meet?</span><span class="d">It asks before it drafts anything</span></div><span class="farrow">&rarr;</span><div class="fstep"><span class="n">CREATE</span><span class="t">Contact + Trello card</span><span class="d">One card per person, Various Projects</span></div><span class="farrow">&rarr;</span><div class="fstep"><span class="n">KEEP</span><span class="t">Archive the original</span><span class="d">The photo is filed in Drive</span></div></div>
+  <div class="fnote"><b>If it cannot read a digit, it leaves the field blank.</b> It never guesses the last number of a phone. A blank looks unfinished; a wrong number is a stranger.</div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-t="0:34">
+  <div class="eyebrow">Something I built · 2 of 2</div>
+  <h2 class="wide">A screenshot becomes a calendar event</h2>
+  <div class="flow"><div class="fstep"><span class="n">INPUT</span><span class="t">A screenshot</span><span class="d">iMessage, an app, a web form</span></div><span class="farrow">&rarr;</span><div class="fstep"><span class="n">READ</span><span class="t">Six fields, every time</span><span class="d">Source · who · direction · the ask · timing · what was unreadable</span></div><span class="farrow">&rarr;</span><div class="fstep"><span class="n">ROUTE</span><span class="t">One or many</span><span class="d">Calendar · Trello card · Gmail draft · contact</span></div><span class="farrow">&rarr;</span><div class="fstep gate"><span class="n">GATE · ASK</span><span class="t">Show the plan first</span><span class="d">Nothing is created until I say go</span></div><span class="farrow">&rarr;</span><div class="fstep"><span class="n">CHECK</span><span class="t">Verify it saved</span><span class="d">Re-read the thing it just wrote</span></div></div>
+  <div class="fnote"><b>&ldquo;Tuesday at 3&rdquo; stops the whole thing.</b> A screenshot has no year in it, so it will not create the event &mdash; it asks me which Tuesday. That is rule two, doing its job.</div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-t="0:38">
+  <div class="eyebrow">Where this is going</div>
+  <h2 class="wide">That&rsquo;s a system, not a prompt</h2>
+  <div class="cols three">
+    <div class="card"><span class="tag">Step one</span><h3>Messy input</h3><p>A photo, a screenshot, a transcript, forty survey responses. Something a person would have had to read and retype.</p></div>
+    <div class="card"><span class="tag">Step two</span><h3>Drafted output</h3><p>Structured, usable, and roughly right. Never final.</p></div>
+    <div class="card"><span class="tag">Step three</span><h3>A person checks</h3><p>The step people skip. It is the step that makes the whole thing safe to use.</p></div>
+  </div>
+  <div class="kicker"><b>A prompt gets you one answer. A system does the same job every time, with the same guardrails.</b> Both of those demos run this way whether I am paying attention or not &mdash; that is the difference between using AI and building with it.</div>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-t="0:41">
+  <div class="eyebrow">Your turn · 8 minutes</div>
+  <h2>Write down one task from your week</h2>
+  <ul>
+    <li>Which kind — <b>sorter or drafter?</b></li>
+    <li>What exactly would it produce?</li>
+    <li>What could go wrong? <b>Bias, privacy, or security</b> — and how, specifically?</li>
+    <li>How would you check it before anyone relied on it?</li>
+  </ul>
+  <div class="kicker">A real task from this week. Not &ldquo;write emails&rdquo; — <b>&ldquo;draft the reminder to apprentices who missed Monday's check-in.&rdquo;</b></div>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-t="0:51">
+  <div class="eyebrow">Check · which of these should you actually do?</div>
+  <h2 class="wide">Which of these three should you actually do?</h2>
+  <ul>
+    <li><b>A.</b> Use Gemini to draft a job posting from three of our old ones.</li>
+    <li class="warn"><b>B.</b> Upload the apprentice roster — names, addresses, SSNs — to ChatGPT to find duplicates.</li>
+    <li class="warn"><b>C.</b> Have AI review applications and decide who advances to interview.</li>
+  </ul>
+  <div class="kicker"><b>AI drafts and sorts. People decide and check.</b></div>
+</section>
+
+<!-- 22 -->
+<section class="slide" data-t="0:58">
+  <div class="eyebrow">Before you go</div>
+  <h2 class="wide">Try it once this week</h2>
+  <p class="lede">You have one task written down and one risk attached to it. Run it once, and check the output the way you said you would.</p>
+  <div class="rule-line" style="margin-top:2.4rem"></div>
+  <p class="big" style="font-size:clamp(1.4rem,3vw,2.4rem)">Session 2 — September 18</p>
+  <p class="lede">Gemini and prompt engineering: getting better output, using the task you just wrote down.</p><div class="kicker" style="margin-top:1.8rem">Across the five sessions we move from <b>generating content</b> to <b>building systems</b> &mdash; things that run the same way every time, without you in the loop for every step.</div>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-t="0:59">
+  <div class="eyebrow">Watch later &middot; optional</div>
+  <h2 class="wide">Where to go next, if you want to</h2>
+  <div class="plist">
+    <div class="prow">
+      <img src="https://i.ytimg.com/vi/qv6UVOQ0F44/mqdefault.jpg" alt="MarI/O thumbnail">
+      <div>
+        <div class="pt">MarI/O &mdash; Machine Learning for Video Games</div>
+        <div class="pw">SethBling &middot; the one from earlier. Nobody programmed it to jump &mdash; it learned by failing. <b>Start here.</b></div>
+        <div class="pu"><b>youtube.com/watch?v=qv6UVOQ0F44</b></div>
+      </div>
+    </div>
+    <div class="prow">
+      <img src="https://i.ytimg.com/vi/qYNweeDHiyU/mqdefault.jpg" alt="IBM explainer thumbnail">
+      <div>
+        <div class="pt">AI, Machine Learning, Deep Learning and Generative AI Explained</div>
+        <div class="pw">IBM Technology &middot; ten minutes on how the four terms nest together. For when you want the vocabulary.</div>
+        <div class="pu"><b>youtube.com/watch?v=qYNweeDHiyU</b></div>
+      </div>
+    </div>
+    <div class="prow">
+      <img src="https://i.ytimg.com/vi/rKo9iLGjUbs/mqdefault.jpg" alt="Learn To Use AI playlist thumbnail">
+      <div>
+        <div class="pt">Learn To Use AI <span style="font-family:var(--mono);font-size:.62em;letter-spacing:.1em;color:var(--accent);text-transform:uppercase">&middot; playlist</span></div>
+        <div class="pw">Matt Wolfe &middot; an ongoing series on actually using the tools, not explaining them. Dip in anywhere &mdash; you do not watch it in order.</div>
+        <div class="pu"><b>youtube.com/playlist?list=PLf-bJpKeji6T054DPLgMEgAj8rySAwFWJ</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="kicker" style="margin-top:1.2rem">None of this is homework. <b>The one thing to actually do is the task you wrote down.</b></div>
+</section>
+
+<footer><span id="tm"></span><span id="ct"></span></footer>
+<div class="nav"><i id="bar"></i></div>
+
+<script>
+(function(){
+  var s=[].slice.call(document.querySelectorAll('.slide')),i=0,n=s.length;
+  var ct=document.getElementById('ct'),tm=document.getElementById('tm'),
+      bar=document.getElementById('bar'),nb=null,np=null;
+  function show(k){
+    i=Math.max(0,Math.min(n-1,k));
+    s.forEach(function(el,j){el.classList.toggle('on',j===i)});
+    ct.textContent=String(i+1).padStart(2,'0')+' / '+n;
+    tm.textContent=s[i].dataset.t||'';
+    bar.style.width=((i+1)/n*100)+'%';
+  }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();show(i+1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1)}
+    else if(e.key==='Home')show(0);
+    else if(e.key==='End')show(n-1);
+  });
+  document.addEventListener('click',function(){ show(i+1) });
+  show(0);
+})();
+</script>
+</body>
+</html>
